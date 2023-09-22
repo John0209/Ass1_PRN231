@@ -1,0 +1,60 @@
+﻿@page
+@model MovieManagement_NguyenTuanVu.Pages.EditMemberModel
+@{
+    ViewData["Title"] = "Edit";
+}
+@if (ViewData["Message"] != null)
+{
+    <h3 style="color:red">@ViewData["Message"]</h3>
+}
+
+<h1>Edit</h1>
+
+<h4>Member</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="memberRequest.MemberId" />
+            <div class="form-group">
+                <label asp-for="memberRequest.Email" class="control-label"></label>
+                <input asp-for="memberRequest.Email" class="form-control" />
+                <span asp-validation-for="memberRequest.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="memberRequest.CompanyName" class="control-label"></label>
+                <input asp-for="memberRequest.CompanyName" class="form-control" />
+                <span asp-validation-for="memberRequest.CompanyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="memberRequest.City" class="control-label"></label>
+                <input asp-for="memberRequest.City" class="form-control" />
+                <span asp-validation-for="memberRequest.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="memberRequest.Country" class="control-label"></label>
+                <input asp-for="memberRequest.Country" class="form-control" />
+                <span asp-validation-for="memberRequest.Country" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="memberRequest.Password" class="control-label"></label>
+                <input asp-for="memberRequest.Password" class="form-control" />
+                <span asp-validation-for="memberRequest.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="/MemberPage/Member">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,77 @@
+﻿@page
+@model eStoreClient.Pages.ProductModel
+@{
+}
+@if (ViewData["Message"] != null)
+{
+    <h3 style="color:red">@ViewData["Message"]</h3>
+}
+<div style="display:flex;">
+<p>
+    <a asp-page="Create">Create New Product</a>
+</p>
+<button type="submit" class="btn btn-primary" style="margin-left:900px;">
+        <a asp-page="/MemberPage/Member" style="color:white">Member Management</a>
+</button>
+</div>
+
+<div>
+    <form method="post">
+        <input asp-for="@Model.search" />
+        <button type="submit">Search</button>
+    </form>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].ProductId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].CategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].Weight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].UnitPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].UnitsInStock)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Weight)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitsInStock)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ProductId">Update</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ProductId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

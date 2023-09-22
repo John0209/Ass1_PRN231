@@ -1,0 +1,77 @@
+﻿@page
+@model eStoreClient.Pages.MemberModel
+@{
+}
+@if (ViewData["Message"] != null)
+{
+    <h3 style="color:red">@ViewData["Message"]</h3>
+}
+<div style="display:flex;">
+    <p>
+        <a asp-page="/MemberPage/AddMember">Create New Member</a>
+    </p>
+    <button type="submit" class="btn btn-primary" style="margin-left:900px;">
+        <a asp-page="/MemberPage/Member" style="color:white">Back Member</a>
+    </button>
+</div>
+
+<div>
+    <form method="post">
+        <input asp-for="@Model.search" />
+        <button type="submit">Search</button>
+    </form>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Members[0].MemberId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Members[0].Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Members[0].CompanyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Members[0].City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Members[0].Country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Members[0].Password)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Members)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MemberId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td>
+                    <a asp-page="/MemberPage/EditMember" asp-route-id="@item.MemberId">Update</a> |
+                    <a asp-page="/MemberPage/DeleteMember" asp-route-id="@item.MemberId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
