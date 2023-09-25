@@ -1,0 +1,77 @@
+﻿@page
+@model eStoreClient.Pages.OrderModel
+@{
+}
+@if (ViewData["Message"] != null)
+{
+    <h3 style="color:red">@ViewData["Message"]</h3>
+}
+<div style="display:flex;">
+   @* <button type="submit" class="btn btn-danger" style="margin-bottom:20px;">
+        <a asp-page="/OrderPage/OrderDetail" style="color:white">Order Detail</a>
+    </button>*@
+    <button type="submit" class="btn btn-primary" style="margin-bottom:20px;">
+        <a asp-page="/MemberPage/Member" style="color:white">Back Member</a>
+    </button>
+</div>
+
+<div>
+    <form method="post">
+        <input asp-for="@Model.search" />
+        <button type="submit">Search</button>
+    </form>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Orders[0].OrderId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Orders[0].Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Orders[0].OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Orders[0].RequiredDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Orders[0].ShippedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Orders[0].Freight)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Orders)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequiredDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShippedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Freight)
+                </td>
+                <td>
+                    <a asp-page="/OrderPage/OrderDetail" asp-route-OrderId="@item.OrderId">Detail</a> |
+                    <a asp-page="/OrderPage/DeleteOrder" asp-route-id="@item.OrderId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -11,8 +11,9 @@ namespace BusinessObject.Service.IService
 	{
 		public IEnumerable<OrderDetail> GetOrderDetails();
 		public bool UpdateOrderDetail(OrderDetail OrderDetail);
-		public bool DeleteOrderDetail(OrderDetail OrderDetail);
-		public OrderDetail GetOrderDetailById(int id);
-		public bool AddOrderDetail(OrderDetail OrderDetail);
+		public void DeleteOrderDetail(OrderDetail OrderDetail);
+		public OrderDetail GetOrderDetailById(int orderId);
+
+        public void AddOrderDetail(OrderDetail OrderDetail);
 	}
 }

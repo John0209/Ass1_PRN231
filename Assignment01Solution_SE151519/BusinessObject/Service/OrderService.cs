@@ -18,25 +18,27 @@ namespace BusinessObject.Service
 			_unit = unit;
 		}
 
-		public bool AddOrder(Order Order)
+		public void AddOrder(Order Order)
 		{
-			throw new NotImplementedException();
-		}
+            _unit.OrderRepository.Add(Order);
+            _unit.OrderRepository.Save();
+        }
 
-		public bool DeleteOrder(Order Order)
+		public void DeleteOrder(Order Order)
 		{
-			throw new NotImplementedException();
-		}
+            _unit.OrderRepository.Delete(Order);
+            _unit.OrderRepository.Save();
+        }
 
 		public Order GetOrderById(int id)
 		{
-			throw new NotImplementedException();
-		}
+            return _unit.OrderRepository.GetById(id);
+        }
 
 		public IEnumerable<Order> GetOrders()
 		{
-			throw new NotImplementedException();
-		}
+            return _unit.OrderRepository.GetAll();
+        }
 
 		public bool UpdateOrder(Order Order)
 		{

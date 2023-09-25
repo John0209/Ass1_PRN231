@@ -7,9 +7,11 @@ builder.Services.AddRazorPages();
 builder.Services.AddHttpClient();
 builder.Services.AddRazorPages(option =>
 {
-    option.Conventions.AddPageRoute("/MemberPage/{*path}", "/MemberPage");
+    option.Conventions.AddPageRoute("/MemberPage/{*path}", "/MemberPage"); 
+    option.Conventions.AddPageRoute("/OrderPage/{*path}", "/OrderPage");
 });
-
+builder.Services.AddSession();
+builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -28,5 +30,5 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
-
+app.UseSession();
 app.Run();

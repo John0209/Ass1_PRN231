@@ -11,7 +11,7 @@ namespace eStoreClient.Pages
 {
     public class ProductModel : ClientAbstract
     {
-        public ProductModel(IHttpClientFactory http) : base(http)
+        public ProductModel(IHttpClientFactory http, IHttpContextAccessor httpContextAccessor) : base(http, httpContextAccessor)
         {
         }
 
@@ -19,7 +19,11 @@ namespace eStoreClient.Pages
         public List<ProductRespone> Products { get; set; } = default!;
         [BindProperty]
         public string search { get; set; }
-        public async Task OnGetAsync()
+        [BindProperty]
+        public int number { get; set; }
+        [BindProperty]
+        public int selectedProducts { get; set; } = default!;
+		public async Task OnGetAsync()
         {
             // Gọi API endpoint từ dự án API.
             HttpResponseMessage response = await HttpClient.GetAsync("api/product/Get-All");
@@ -32,17 +36,25 @@ namespace eStoreClient.Pages
         }
         public async Task<IActionResult> OnPostAsync()
         {
-            string url = $"api/product/Search?serachs={search}";
-            HttpResponseMessage response = await HttpClient.GetAsync(url);
-            if (response.IsSuccessStatusCode)
+            switch (number)
             {
-                var content = await response.Content.ReadAsStringAsync();
+                case 1:
+                    string url = $"api/product/Search?serachs={search}";
+                    HttpResponseMessage response = await HttpClient.GetAsync(url);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var content = await response.Content.ReadAsStringAsync();
 
-                Products = JsonConvert.DeserializeObject< List<ProductRespone>>(content);
-                return Page();
+                        Products = JsonConvert.DeserializeObject<List<ProductRespone>>(content);
+                        return Page();
+                    }
+                    ViewData["Message"] = $"{search} don't exits!";
+                    break;
+                case 2:
+                    _context.HttpContext.Session.SetInt32("ProductSS", selectedProducts);
+                    break;
             }
-            ViewData["Message"] = $"{search} don't exits!";
-            return Page();
+            return RedirectToPage("/Product");
         }
     }
 }

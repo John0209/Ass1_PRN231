@@ -17,11 +17,11 @@ namespace MovieManagement_NguyenTuanVu.Pages
 {
     public class EditModel : ClientAbstract
     {
-        public EditModel(IHttpClientFactory http) : base(http)
-        {
-        }
+		public EditModel(IHttpClientFactory http, IHttpContextAccessor httpContextAccessor) : base(http, httpContextAccessor)
+		{
+		}
 
-        [BindProperty]
+		[BindProperty]
         public ProductRequest productRequest { get; set; } = default!;
         public async Task OnGetAsync(int? id)
         {

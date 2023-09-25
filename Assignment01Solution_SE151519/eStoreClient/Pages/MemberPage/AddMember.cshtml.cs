@@ -16,11 +16,11 @@ namespace MovieManagement_NguyenTuanVu.Pages
 {
     public class AddMemberModel : ClientAbstract
     {
-        public AddMemberModel(IHttpClientFactory http) : base(http)
-        {
-        }
+		public AddMemberModel(IHttpClientFactory http, IHttpContextAccessor httpContextAccessor) : base(http, httpContextAccessor)
+		{
+		}
 
-        [BindProperty]
+		[BindProperty]
         public MemberRequest memberRequest { get; set; } = default!;
         public List<MemberRespone> memberRespone { get; set; } = default!;
         public IActionResult OnGet()

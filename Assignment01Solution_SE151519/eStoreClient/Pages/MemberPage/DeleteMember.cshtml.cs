@@ -14,8 +14,7 @@ namespace MovieManagement_NguyenTuanVu.Pages
 {
     public class DeleteMemberModel : ClientAbstract
     {
-
-        public DeleteMemberModel(IHttpClientFactory http) : base(http)
+        public DeleteMemberModel(IHttpClientFactory http, IHttpContextAccessor httpContextAccessor) : base(http, httpContextAccessor)
         {
         }
 

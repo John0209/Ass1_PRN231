@@ -11,8 +11,8 @@ namespace BusinessObject.Service.IService
 	{
 		public IEnumerable<Order> GetOrders();
 		public bool UpdateOrder(Order Order);
-		public bool DeleteOrder(Order Order);
+		public void DeleteOrder(Order Order);
 		public Order GetOrderById(int id);
-		public bool AddOrder(Order Order);
+		public void AddOrder(Order Order);
 	}
 }

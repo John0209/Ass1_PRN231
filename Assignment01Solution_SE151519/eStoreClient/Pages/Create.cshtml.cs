@@ -16,11 +16,11 @@ namespace MovieManagement_NguyenTuanVu.Pages
 {
     public class CreateModel : ClientAbstract
     {
-        public CreateModel(IHttpClientFactory http) : base(http)
-        {
-        }
+		public CreateModel(IHttpClientFactory http, IHttpContextAccessor httpContextAccessor) : base(http, httpContextAccessor)
+		{
+		}
 
-        [BindProperty]
+		[BindProperty]
         public ProductRequest productRequest { get; set; } = default!;
         public List<ProductRespone> productRespone { get; set; } = default!;
         public IActionResult OnGet()
@@ -30,7 +30,8 @@ namespace MovieManagement_NguyenTuanVu.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            CreateId();
+
+            productRequest.ProductId =await CreateId();
             string url = "api/product/Create";
             // Chuyển đổi đối tượng ProductRequest thành chuỗi JSON
             var jsonContent = JsonConvert.SerializeObject(productRequest);
@@ -49,7 +50,7 @@ namespace MovieManagement_NguyenTuanVu.Pages
             }
         }
 
-        private async Task CreateId()
+        private async Task<int> CreateId()
         {
             // Gọi API endpoint từ dự án API.
             HttpResponseMessage response = await HttpClient.GetAsync("api/product/Get-All");
@@ -58,8 +59,9 @@ namespace MovieManagement_NguyenTuanVu.Pages
                 var content = await response.Content.ReadAsStringAsync();
 
                 productRespone = JsonConvert.DeserializeObject<List<ProductRespone>>(content);
-                productRequest.ProductId=productRespone.LastOrDefault().ProductId+1;
+                return productRespone.LastOrDefault().ProductId+1;
             }
+            return 0;
         }
     }
 }

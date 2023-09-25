@@ -1,0 +1,56 @@
+﻿@page
+@model eStoreClient.Pages.DeleteOrderModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+@if (ViewData["Message"] != null)
+{
+    <h3 style="color:red">@ViewData["Message"]</h3>
+}
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Member</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.orderRequest.OrderId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.orderRequest.OrderId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.orderRequest.OrderDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.orderRequest.OrderDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.orderRequest.RequiredDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.orderRequest.RequiredDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.orderRequest.ShippedDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.orderRequest.ShippedDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.orderRequest.Freight)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.orderRequest.Freight)
+        </dd>
+
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="orderRequest.OrderId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="/OrderPage/Order">Back to List</a>
+    </form>
+</div>

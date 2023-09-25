@@ -1,49 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DataAccess.RequestModel;
 using eStoreClient.Pages.Inheritance;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
-namespace MovieManagement_NguyenTuanVu.Pages
+namespace eStoreClient.Pages
 {
-    public class DeleteModel : ClientAbstract
+    public class DeleteOrderModel : ClientAbstract
     {
-		public DeleteModel(IHttpClientFactory http, IHttpContextAccessor httpContextAccessor) : base(http, httpContextAccessor)
-		{
-		}
+        public DeleteOrderModel(IHttpClientFactory http, IHttpContextAccessor httpContextAccessor) : base(http, httpContextAccessor)
+        {
+        }
 
-		[BindProperty]
-        public ProductRequest productRequest { get; set; } = default!;
+        [BindProperty]
+        public OrderRequest orderRequest { get; set; } = default!;
         public async Task OnGetAsync(int? id)
         {
-            string url = $"api/product/Get-By-Id?id={id}";
+            string url = $"api/order/Get-By-Id?id={id}";
             HttpResponseMessage response = await HttpClient.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
 
-                productRequest = JsonConvert.DeserializeObject<ProductRequest>(content);
+                orderRequest = JsonConvert.DeserializeObject<OrderRequest>(content);
             }
         }
         public async Task<IActionResult> OnPostAsync()
         {
-            string url = $"api/product/Delete?id={productRequest.ProductId}";
+            string url = $"api/order/Delete?id={orderRequest.OrderId}";
             HttpResponseMessage response = await HttpClient.DeleteAsync(url);
             if (response.IsSuccessStatusCode)
             {
-                return RedirectToPage("Product");
+                return RedirectToPage("/OrderPage/Order");
             }
             else
             {
                 ViewData["Message"] = "Delete Fail!";
                 return Page();
             }
-         }
+        }
+
     }
 }

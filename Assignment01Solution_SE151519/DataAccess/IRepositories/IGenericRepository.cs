@@ -10,7 +10,8 @@ namespace DataAccess.IRepositories
 	{
     IEnumerable<T> GetAll();
 	T GetById(int id);
-	void Delete(T entity);
+    T GetOrderDetailById(int orderId, int productId);
+    void Delete(T entity);
 	void Update(T entity);
 	void Add(T entity);
 	void Save();

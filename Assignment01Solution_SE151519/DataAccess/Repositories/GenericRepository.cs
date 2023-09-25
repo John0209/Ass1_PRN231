@@ -35,7 +35,12 @@ namespace DataAccess.Repositories
 			return _context.Set<T>().Find(id);
 		}
 
-		public void Save()
+        public T GetOrderDetailById(int orderId, int productId)
+        {
+            return _context.Set<T>().Find(orderId,productId);
+        }
+
+        public void Save()
 		{
 			_context.SaveChanges();
 		}

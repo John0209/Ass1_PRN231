@@ -1,0 +1,22 @@
+﻿@page
+@model eStoreClient.Pages.CartModel
+@{
+}
+<button type="submit" class="btn btn-primary" >
+	<a asp-page="/Product" style="color:white">Back Menu</a>
+</button>
+		<div>
+			<p style="color:brown;font-weight:500; font-size:30px;">
+				@Model.Product.ProductName
+			</p>
+			<div style="display:flex">
+				<p id="quantity">x 1</p>
+				<p id="total" style="margin-left:100px;">
+					@Model.Product.UnitPrice
+					<small style="text-decoration:underline">đ</small>
+				</p>
+			</div>
+		</div>
+		<form method="post">
+	<button type="submit" class="btn btn-danger">Buy Product</button>
+		</form>
