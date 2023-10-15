@@ -1,4 +1,6 @@
-﻿using DataAccess.Models;
+﻿using AutoMapper;
+using DataAccess.Models;
+using Microsoft.AspNetCore.OData.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +18,7 @@ namespace BusinessObject.Service.IService
 		public void AddMember(Member member);
 		public Member CheckLogin(string email, string password);
 		public IEnumerable<Member> SearchMember(string searchs);
-	}
+		public Task<IQueryable<Member>> GetMemberOData(ODataQueryOptions<Member> options, IMapper mapper);
+
+    }
 }

@@ -1,5 +1,8 @@
-﻿using DataAccess.IRepositories;
+﻿using AutoMapper;
+using AutoMapper.AspNet.OData;
+using DataAccess.IRepositories;
 using DataAccess.Models;
+using Microsoft.AspNetCore.OData.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,5 +52,10 @@ namespace DataAccess.Repositories
 		{
 			_context.Set<T>().Update(entity);
 		}
-	}
+        public Task<IQueryable<T>> GetOData(ODataQueryOptions<T> options, IMapper mapper)
+		{
+			return _context.Set<T>().GetQueryAsync(mapper, options, null);
+        }
+
+    }
 }

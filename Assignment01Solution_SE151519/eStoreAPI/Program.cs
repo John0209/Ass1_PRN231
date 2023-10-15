@@ -4,12 +4,20 @@ using DataAccess.IRepositories;
 using DataAccess.Models;
 using DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.OData;
+using Microsoft.AspNetCore.OData.Batch;
+using Microsoft.OData.Edm;
+using Microsoft.OData.ModelBuilder;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddControllers().AddOData(op =>
+{
+	op.Select().Expand().Filter().OrderBy().SetMaxTop(null).Count();
+	op.AddRouteComponents("api", GetEdmModel());
+});
 
-builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -30,19 +38,28 @@ builder.Services.AddDbContext<FStoreDBContext>(option =>
 	option.UseSqlServer(builder.Configuration.GetConnectionString("FStoreDB")));
 // Mapper
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
-var app = builder.Build();
 
+var app = builder.Build();
+app.UseRouting();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-	app.UseSwagger();
+    app.UseSwagger();
 	app.UseSwaggerUI();
 }
-
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
+
 app.Run();
+
+static IEdmModel GetEdmModel()
+{
+	ODataConventionModelBuilder builder = new();
+	builder.EntitySet<Member>("Member");
+   builder.EntitySet<Product>("Product");
+    return builder.GetEdmModel();
+}

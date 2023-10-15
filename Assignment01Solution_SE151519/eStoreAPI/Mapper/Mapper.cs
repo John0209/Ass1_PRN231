@@ -19,11 +19,13 @@ namespace eStoreAPI.Mapper
                             otp => otp.MapFrom(src => src.Product != null ? src.Product.ProductName : string.Empty))
                 .ReverseMap();
             CreateMap<Member, MemberRespone>().ReverseMap();
+			CreateMap<Member, Member>();
 
             CreateMap<Order, OrderRequest>().ReverseMap();
             CreateMap<OrderDetail, OrderDetailRequest>().ReverseMap();
             CreateMap<Member, MemberRequest>().ReverseMap();
 			CreateMap<Product, ProductRequest>().ReverseMap();
+            CreateMap<Product, Product>().ReverseMap();
         }
 	}
 }

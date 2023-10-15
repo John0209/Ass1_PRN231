@@ -1,6 +1,9 @@
-﻿using BusinessObject.Service.IService;
+﻿using AutoMapper;
+using AutoMapper.AspNet.OData;
+using BusinessObject.Service.IService;
 using DataAccess.IRepositories;
 using DataAccess.Models;
+using Microsoft.AspNetCore.OData.Query;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
@@ -14,12 +17,12 @@ namespace BusinessObject.Service
 	{
 		IUnitRepository _unit;
 
-		public MemberService(IUnitRepository unit)
-		{
-			_unit = unit;
-		}
+        public MemberService(IUnitRepository unit)
+        {
+            _unit = unit;
+        }
 
-		public void AddMember(Member member)
+        public void AddMember(Member member)
 		{
             _unit.MemberRepository.Add(member);
             _unit.MemberRepository.Save();
@@ -55,7 +58,10 @@ namespace BusinessObject.Service
 		{
 			return _unit.MemberRepository.GetAll();
 		}
-
+        public async Task<IQueryable<Member>> GetMemberOData(ODataQueryOptions<Member> options, IMapper mapper)
+        {
+            return await _unit.MemberRepository.GetOData(options, mapper);
+        }
         public IEnumerable<Member> SearchMember(string searchs)
         {
             var members = GetMembers();

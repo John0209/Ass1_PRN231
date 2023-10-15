@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.OData.Query;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,5 +17,7 @@ namespace DataAccess.IRepositories
 	void Update(T entity);
 	void Add(T entity);
 	void Save();
-	}
+	Task<IQueryable<T>> GetOData(ODataQueryOptions<T> options, IMapper mapper);
+
+    }
 }

@@ -1,6 +1,9 @@
-﻿using BusinessObject.Service.IService;
+﻿using AutoMapper;
+using BusinessObject.Service.IService;
 using DataAccess.IRepositories;
 using DataAccess.Models;
+using Microsoft.AspNetCore.OData.Query;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +15,7 @@ namespace BusinessObject.Service
 	public class ProductService : IProductService
 	{
 		IUnitRepository _unit;
+		IMapper _mapper;
 
 		public ProductService(IUnitRepository unit)
 		{
@@ -33,8 +37,11 @@ namespace BusinessObject.Service
 		{
 			return _unit.ProductRepository.GetById(id);
 		}
-
-		public IEnumerable<Product> GetProducts()
+        public async Task<IQueryable<Product>> GetProductOData(ODataQueryOptions<Product> options, IMapper mapper)
+        {
+            return await _unit.ProductRepository.GetOData(options, mapper);
+        }
+        public IEnumerable<Product> GetProducts()
 		{
 			return _unit.ProductRepository.GetAll();
 		}
@@ -46,7 +53,7 @@ namespace BusinessObject.Service
 			var productsSearch = products.Where(x => x.ProductName.ToLower().Contains(searchs));
             return productsSearch;
         }
-
+        
         public bool UpdateProduct(Product Product)
 		{
 			var productUpdate = GetProductById(Product.ProductId);

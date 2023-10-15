@@ -3,14 +3,15 @@ using BusinessObject.Service.IService;
 using DataAccess.Models;
 using DataAccess.RequestModel;
 using DataAccess.ResponeModel;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 
 namespace eStoreAPI.Controllers
 {
 	[Route("api/member")]
 	[ApiController]
-	public class MemberAPI : ControllerBase
+    
+    public class MemberAPI : ControllerBase
 	{
 		IMemberService _member;
 		IMapper _map;
@@ -20,16 +21,15 @@ namespace eStoreAPI.Controllers
 			_member = member;
 			_map = map;
 		}
-		[HttpPost("Login")]
-		public IActionResult Login(string email, string password)
-		{
-			var login= _member.CheckLogin(email, password);
-			if(login != null)
-			{
-				return Ok(login);
-			}
-			return BadRequest();
-		}
+
+        [EnableQuery]
+        [HttpGet("OData")]
+        public async Task<IActionResult> GetMemberOData(ODataQueryOptions<Member> options)
+        {
+            return Ok(await _member.GetMemberOData(options,_map));
+        }
+
+
         [HttpGet("Get-All")]
         public IActionResult GetMember()
         {
@@ -41,6 +41,18 @@ namespace eStoreAPI.Controllers
             }
             return BadRequest("Member is Empty!");
         }
+        [HttpPost("Login")]
+		public IActionResult Login(string email, string password)
+		{
+			var login= _member.CheckLogin(email, password);
+			if(login != null)
+			{
+				return Ok(login);
+			}
+			return BadRequest();
+		}
+
+        
         [HttpGet("Get-By-Id")]
         public IActionResult GetMemberById(int id)
         {

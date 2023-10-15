@@ -6,6 +6,7 @@ using DataAccess.RequestModel;
 using DataAccess.ResponeModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 
 namespace eStoreAPI.Controllers
 {
@@ -88,6 +89,12 @@ namespace eStoreAPI.Controllers
             }
             else
                 return BadRequest();
+        }
+        [EnableQuery]
+        [HttpGet("OData")]
+        public async Task<IActionResult> GetProductOData(ODataQueryOptions<Product> options)
+        {
+            return Ok(await _product.GetProductOData(options, _map));
         }
     }
 }
